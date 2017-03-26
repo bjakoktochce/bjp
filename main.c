@@ -30,17 +30,19 @@
  */
 
 
-#include<stdio.h>
+#include <stdio.h>
 #include <unistd.h>
-#include<string.h>
-#include<sys/socket.h>
-#include<stdlib.h>
-#include<errno.h>
-#include<netinet/tcp.h>
-#include<netinet/ip.h> 
+#include <string.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <netinet/tcp.h>
+#include <netinet/ip.h> 
 
-#include<getopt.h>
+#include <getopt.h>
 //#include "tcp.h"
+
+#include "version.h"
 
 
 /*
@@ -50,7 +52,8 @@
 int usage(void)
 {
 	//fprintf(stderr, "bjp\n");
-        printf("usage: bjp <protocol> <flags> <address> \n");
+        printf("bjp %s\n\n",VERSION);
+	printf("usage: bjp <protocol> <flags> <address> \n");
 	printf("protocol:\n");
         printf("        -t TCP packet\n");
         printf("        -i ICMP packet\n");
@@ -93,10 +96,9 @@ int main (int argc, char *argv[])
 
 
 	
-	while ((opt = getopt(argc, argv, "itSARF")) != -1) {
+	while ((opt = getopt(argc, argv, "itSARFUP")) != -1) {
                switch (opt) {
                		case 'i':
-				
                    		break;
                		case 't':
                    		break;
@@ -116,6 +118,10 @@ int main (int argc, char *argv[])
 			case 'F':
 				tcph->fin = 1;
 				break;
+			case 'U':
+				break;
+			case 'P':
+				break;
 			default: 
 				;
 				break;
@@ -125,21 +131,18 @@ int main (int argc, char *argv[])
                }
         }
 	
-	if(argc == 1) usage();
+	if(argc == 1) {
+		usage();	// if wrong arguments passed just show usage information
+		return 0;
+	}
 	else {
-		printf("bjp is a small TCP ping program.\n");
-		printf("protocol: TCP, flags: ");
-		if(tcph->syn == 1) printf("S");
-		if(tcph->ack ==	1) printf("A");
-		if(tcph->rst ==	1) printf("R");
-		if(tcph->fin ==	1) printf("F");
-		printf(" packet size: \n");		
-		//tcp();
+		 printf("SYN: %i\n", tcph->syn);
+		 printf("FIN: %i\n", tcph->fin);
+		//usage();
+		//return 0;
 	}
 
-	//tcph->syn = 0;
-	//printf("%i", tcph->syn);
-	//tcp();
+	tcp();
      
 	return 0;
 }
