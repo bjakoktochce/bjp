@@ -49,11 +49,12 @@
  * Print usage of the program
  * when no or bad options were set
  */
-int usage(void)
+int 
+usage(void)
 {
 	//fprintf(stderr, "bjp\n");
-        printf("bjp %s\n\n",VERSION);
-	printf("usage: bjp <protocol> <flags> <address> \n");
+        printf("bjp %s small ping utility by Bartosz Jakoktochce\n\n",VERSION);
+	printf("usage: bjp <protocol> <flags> <address> \n\n");
 	printf("protocol:\n");
         printf("        -t TCP packet\n");
         printf("        -i ICMP packet\n");
@@ -77,7 +78,8 @@ int usage(void)
  * Main loop of the program
  *
  */
-int main (int argc, char *argv[])
+int 
+main (int argc, char *argv[])
 {
 	int opt = 0;
 
@@ -95,6 +97,9 @@ int main (int argc, char *argv[])
     	struct tcphdr *tcph = (struct tcphdr *) (datagram + sizeof (struct ip));
 
 
+	/*
+	 * check arguments from command line
+	 */
 	
 	while ((opt = getopt(argc, argv, "itSARFUP")) != -1) {
                switch (opt) {
@@ -130,11 +135,20 @@ int main (int argc, char *argv[])
 				//exit(EXIT_FAILURE);
                }
         }
-	
+
+	/*
+	 * we're checking the number of arguments and if there are wrong arguments just show the usage info and exit
+	 */	
+
 	if(argc == 1) {
-		usage();	// if wrong arguments passed just show usage information
+		usage();	
 		return 0;
 	}
+
+	/*
+	 * otherwise go ahead
+	 */
+
 	else {
 		 printf("SYN: %i\n", tcph->syn);
 		 printf("FIN: %i\n", tcph->fin);
