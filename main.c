@@ -69,6 +69,8 @@ usage(void)
 	printw("	-s packet size\n");
 	
 	printw("\n");
+
+	printw("Hit any key to continue..");
 	refresh();
 	getch();
 	endwin();
