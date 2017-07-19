@@ -52,24 +52,26 @@
 int 
 usage(void)
 {
-        printf("bjp %s small ping utility by Bartosz Jakoktochce\n\n",VERSION);
-	printf("usage: bjp <protocol> <flags> <address> \n\n");
-	printf("protocol:\n");
-        printf("        -t TCP packet\n");
-        printf("        -i ICMP packet\n");
-	printf("flags:\n");
-        printf("        -S SYN flag\n");
-	printf("	-F FIN flag\n");
-        printf("        -A ACK flag\n");
-        printf("        -R RST flag\n");
-	printf("	-U URG flag\n");
-	printf("	-P PSH flag\n");
-	printf("options:\n");	
-        printf("	-p destination port\n");
-	printf("	-s packet size\n");
+        printw("bjp %s small ping utility by Bartosz Jakoktochce\n\n",VERSION);
+	printw("usage: bjp <protocol> <flags> <address> \n\n");
+	printw("protocol:\n");
+        printw("        -t TCP packet\n");
+        printw("        -i ICMP packet\n");
+	printw("flags:\n");
+        printw("        -S SYN flag\n");
+	printw("	-F FIN flag\n");
+        printw("        -A ACK flag\n");
+        printw("        -R RST flag\n");
+	printw("	-U URG flag\n");
+	printw("	-P PSH flag\n");
+	printw("options:\n");	
+        printw("	-p destination port\n");
+	printw("	-s packet size\n");
 	
-	printf("\n");
-
+	printw("\n");
+	refresh();
+	getch();
+	endwin();
 	return 0;
 }
 
@@ -83,6 +85,7 @@ main (int argc, char *argv[])
 {
 	int opt = 0;
 
+	initscr();
 
 	//Datagram to represent the packet
     	char datagram[4096] , source_ip[32] , *data , *pseudogram;
@@ -150,14 +153,15 @@ main (int argc, char *argv[])
 	 */
 
 	else {
-		 printf("SYN: %i\n", tcph->syn);
-		 printf("FIN: %i\n", tcph->fin);
+		 printw("SYN: %i\n", tcph->syn);
+		 printw("FIN: %i\n", tcph->fin);
 		//usage();
 		//return 0;
 	}
 
 	tcp();
-     
+
+	endwin();     
 	return 0;
 }
  
