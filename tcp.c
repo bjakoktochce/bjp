@@ -158,7 +158,8 @@ int tcp(void)
         //Data send successfully
         else
         {
-            printf ("Packet Send. Length : %d \n" , iph->tot_len);
+            printw ("Packet Send. Length : %d \n" , iph->tot_len);
+		refresh();
         }
     }
      

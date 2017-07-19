@@ -44,6 +44,10 @@
 
 #include "version.h"
 
+
+WINDOW *mainwin;
+WINDOW *titlebar;
+
 /*
  * Print usage of the program
  * when no or bad options were set
@@ -52,28 +56,33 @@
 int 
 usage(void)
 {
-        printw("bjp %s small ping utility by Bartosz Jakoktochce\n\n",VERSION);
-	printw("usage: bjp <protocol> <flags> <address> \n\n");
-	printw("protocol:\n");
-        printw("        -t TCP packet\n");
-        printw("        -i ICMP packet\n");
-	printw("flags:\n");
-        printw("        -S SYN flag\n");
-	printw("	-F FIN flag\n");
-        printw("        -A ACK flag\n");
-        printw("        -R RST flag\n");
-	printw("	-U URG flag\n");
-	printw("	-P PSH flag\n");
-	printw("options:\n");	
-        printw("	-p destination port\n");
-	printw("	-s packet size\n");
+	wprintw(mainwin,"usage: bjp <protocol> <flags> <address> \n\n");
+	wprintw(mainwin,"protocol:\n");
+        wprintw(mainwin,"        -t TCP packet\n");
+        wprintw(mainwin,"        -i ICMP packet\n");
+	wprintw(mainwin,"flags:\n");
+        wprintw(mainwin,"        -S SYN flag\n");
+	wprintw(mainwin,"	-F FIN flag\n");
+        wprintw(mainwin,"        -A ACK flag\n");
+        wprintw(mainwin,"        -R RST flag\n");
+	wprintw(mainwin,"	-U URG flag\n");
+	wprintw(mainwin,"	-P PSH flag\n");
+	wprintw(mainwin,"options:\n");	
+        wprintw(mainwin,"	-p destination port\n");
+	wprintw(mainwin,"	-s packet size\n");
 	
-	printw("\n");
+	wprintw(mainwin,"\n");
 
-	printw("Hit any key to continue..");
+	wprintw(mainwin,"Hit any key to continue..");
 	refresh();
+	wrefresh(mainwin);
+	noecho();
+	getch();
+	wclear(mainwin);
+	wrefresh(mainwin);
 	getch();
 	endwin();
+	echo();
 	return 0;
 }
 
@@ -88,7 +97,20 @@ main (int argc, char *argv[])
 	int opt = 0;
 
 	initscr();
+	start_color();
+	init_pair(0, COLOR_WHITE, COLOR_BLACK);
+        init_pair(1, COLOR_BLACK, COLOR_WHITE);
 
+	refresh();	
+			
+	titlebar = newwin(1,150,0,0);
+	wattron(titlebar,COLOR_PAIR(1));
+	wprintw(titlebar," BJP %s - small ping utility using ncurses ", VERSION);
+	wrefresh(titlebar);
+
+	mainwin = newwin(150,150,2,0);
+	
+	
 	//Datagram to represent the packet
     	char datagram[4096] , source_ip[32] , *data , *pseudogram;
      
