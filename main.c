@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016, Bartosz Jakoktochce <grypsy@gmail.com>
+ * Copyright (c) 2016, 2017 Bartosz Jakoktochce <grypsy@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
