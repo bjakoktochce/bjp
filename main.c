@@ -29,7 +29,6 @@
  *
  */
 
-
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -44,7 +43,6 @@
 //#include "tcp.h"
 
 #include "version.h"
-
 
 /*
  * Print usage of the program
