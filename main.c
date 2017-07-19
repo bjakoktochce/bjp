@@ -38,6 +38,7 @@
 #include <errno.h>
 #include <netinet/tcp.h>
 #include <netinet/ip.h> 
+#include <ncurses.h>
 
 #include <getopt.h>
 //#include "tcp.h"
@@ -49,10 +50,10 @@
  * Print usage of the program
  * when no or bad options were set
  */
+
 int 
 usage(void)
 {
-	//fprintf(stderr, "bjp\n");
         printf("bjp %s small ping utility by Bartosz Jakoktochce\n\n",VERSION);
 	printf("usage: bjp <protocol> <flags> <address> \n\n");
 	printf("protocol:\n");
@@ -78,6 +79,7 @@ usage(void)
  * Main loop of the program
  *
  */
+
 int 
 main (int argc, char *argv[])
 {
