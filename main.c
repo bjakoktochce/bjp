@@ -77,13 +77,22 @@ usage(void)
 	refresh();
 	wrefresh(mainwin);
 	noecho();
-	getch();
-	wclear(mainwin);
-	wrefresh(mainwin);
-	getch();
-	endwin();
-	echo();
+	//getch();
+	//wclear(mainwin);
+	//wrefresh(mainwin);
+	//getch();
+	///endwin();
+	//echo();
 	return 0;
+}
+
+void
+title(void)
+{
+	titlebar = newwin(1,150,0,0);
+        wattron(titlebar,COLOR_PAIR(1));
+        wprintw(titlebar," bjp %s - small ping utility using ncurses ", VERSION);
+        wrefresh(titlebar);
 }
 
 /*
@@ -97,16 +106,15 @@ main (int argc, char *argv[])
 	int opt = 0;
 
 	initscr();
+	raw();
+	keypad(stdscr, TRUE);
 	start_color();
 	init_pair(0, COLOR_WHITE, COLOR_BLACK);
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
 
 	refresh();	
-			
-	titlebar = newwin(1,150,0,0);
-	wattron(titlebar,COLOR_PAIR(1));
-	wprintw(titlebar," BJP %s - small ping utility using ncurses ", VERSION);
-	wrefresh(titlebar);
+
+	title();			
 
 	mainwin = newwin(150,150,2,0);
 	
@@ -127,7 +135,7 @@ main (int argc, char *argv[])
 	/*
 	 * check arguments from command line
 	 */
-	
+	/*
 	while ((opt = getopt(argc, argv, "itSARFUP")) != -1) {
                switch (opt) {
                		case 'i':
@@ -162,28 +170,40 @@ main (int argc, char *argv[])
 				//exit(EXIT_FAILURE);
                }
         }
-
+*/
 	/*
 	 * we're checking the number of arguments and if there are wrong arguments just show the usage info and exit
 	 */	
 
-	if(argc == 1) {
-		usage();	
-		return 0;
-	}
+	//if(argc == 1) {
+	//	usage();	
+	//	return 0;
+	//}
 
 	/*
 	 * otherwise go ahead
 	 */
 
-	else {
-		 printw("SYN: %i\n", tcph->syn);
-		 printw("FIN: %i\n", tcph->fin);
+	//else {
+	//	 printw("SYN: %i\n", tcph->syn);
+	//	 printw("FIN: %i\n", tcph->fin);
 		//usage();
 		//return 0;
+	//}
+
+	//tcp();
+	noecho();
+
+	char c;
+	c = getch();
+	while(c != KEY_F(1)) {
+		if (c == KEY_F(1)) {
+			usage();
+		}
 	}
 
-	tcp();
+	usage();
+
 
 	endwin();     
 	return 0;
